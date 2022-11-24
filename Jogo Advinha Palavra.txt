@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .letra {
+            width: 100px;
+            height: 100px;
+            background-color: lightgrey;
+            display: inline-block;
+            margin: 5px;
+            border-radius: 100%;
+            text-align: center;
+        }
+
+        button {
+            border-top: 1px solid #000000;
+            background: #fff200;
+            background: -webkit-gradient(linear, left top, left bottom, from(#fff200), to(#fff200));
+            background: -webkit-linear-gradient(top, #fff200, #fff200);
+            background: -moz-linear-gradient(top, #fff200, #fff200);
+            background: -ms-linear-gradient(top, #fff200, #fff200);
+            background: -o-linear-gradient(top, #fff200, #fff200);
+            padding: 10.5px 21px;
+            -webkit-border-radius: 20px;
+            -moz-border-radius: 20px;
+            border-radius: 20px;
+            -webkit-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+            -moz-box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+            box-shadow: rgba(0, 0, 0, 1) 0 1px 0;
+            text-shadow: rgba(0, 0, 0, .4) 0 1px 0;
+            color: #000000;
+            font-size: 18px;
+            font-family: Helvetica, Arial, Sans-Serif;
+            text-decoration: none;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        button:hover {
+            border-top-color: #e1ff00;
+            background: #e1ff00;
+            color: #ffffff;
+        }
+
+        button:active {
+            border-top-color: #fff200;
+            background: #fff200;
+        }
+
+        #erros{
+            width: 100px;
+            height: auto;
+            grid-area: auto;
+        }
+    </style>
+</head>
+
+<body style="background-color: lightblue;">
+    <div style="text-align: center;">
+        <img src="titulko.png" width="300px">
+    </div>
+    <div id="palavra"></div>
+    <div style="text-align: center;"><button id="botãoIniciar">Iniciar</button></div>
+    <div id="erros">Letras Erradas!</div>
+
+    <script>
+        let palavras = ["ifsc", "produção", "multimídia", "vitória", "cidade", "copa", "brasil", "qatar", "hexa"];
+
+        let numeroSorteado = [Math.floor(Math.random() * palavras.length)];
+
+        let palavraSorteada = palavras[numeroSorteado];
+        console.log(palavraSorteada);
+
+        let BotaoIniciar = document.getElementById("botãoIniciar")
+        let divPalavra = document.getElementById("palavra");
+        BotaoIniciar.addEventListener("click", function () {
+            for (let i = 0; i < palavraSorteada.length; i++) {
+                let divLetra = document.createElement("div");
+                divLetra.id = "letra" + i;
+                divLetra.classList.add("letra");
+                divPalavra.appendChild(divLetra);
+
+            }
+           
+            let palavrasCertas = [];
+            let palavrasErradas = [];
+           
+            //funções do codigo
+            function verificarLetra(codigo){
+                return codigo >= 65 && codigo <= 90; 
+            }
+/*
+            function verificarLetra(codigo){
+                return codigo >= 65 && codigo <= 90; 
+            }
+                     
+            function funcionaPfvr(){
+                function errou(){}
+            }
+
+            function errou(){
+                divErros = document.getElementById("erros");
+                    palavrasErradas.forEach(letra =>{
+                     divErros.innerText = letra;
+                    } )    
+            
+            }
+            
+            function acertou(){
+                palavraSorteada.split("").forEach(letra => {
+                    if(palavrasCertas.includes(letra)){
+                    divPalavra.innerText = divLetra + letra;
+                }
+                    
+                });
+                }
+            
+            function jogar(){
+                errou()
+                acertou()
+            }
+            */
+            let divErros = document.getElementById("erros")
+            document.addEventListener("keyup", function (event) {
+                let codigo = event.keyCode;
+                if(verificarLetra(codigo)){
+                    let letra = event.key;
+
+                if(palavrasErradas.includes(letra)){
+                    alert("Você está tentando digitar uma letra repetida!");
+                 
+                }else{
+                  if(palavrasCertas.includes(letra)){
+                    palavrasCertas.push(letra);
+                  }  else{
+                    palavrasErradas.push(letra);
+                  }
+                }
+                //jogar()
+               // }})
+            //})
+                let temLetra = false;
+               for (let i = 0; i < palavraSorteada.length; i++) {
+                if(palavraSorteada.includes(letra)){
+                   temletra=true
+                   divPalavra.innerText = divPalavra.innerText + event.key
+             }
+            
+          if(!temLetra){
+                divErros.innerText = divErros.innerText + event.key;
+                
+            }}
+        }})
+        });
+    </script>
+</body>
+
+</html>
